@@ -20,4 +20,5 @@ run it like so
 
 then sit back and wait. Runs best with source and destination images on 2 drives. Takes about 1:30h for a 600GB disk image on with source on external USB3 SSD and destination on USB3 spinning disk.
 
+Reading and Writing are handled by separate go routines. If there are lots of empty blocks in the XVA file it can sit at __Waiting for writing to finish__ for some time, especially if the destination disk is slower than the source.
 
