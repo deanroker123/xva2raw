@@ -81,7 +81,21 @@ outer:
 			break outer
 		case tar.TypeReg:
 			if hdr.Name == "ova.xml" {
+				b, err := ioutil.ReadAll(xva)
+				if err != nil {
+					log.Fatal(err)
+				}
+				ioutil.WriteFile("ova.xml", b, os.ModePerm)
 				continue
+			}
+			disk := strings.Split(hdr.Name, "/")[0]
+			if curdisk == "" {
+				curdisk = disk
+				log.Printf("Writing Disk: %s\n", curdisk)
+			}
+			if disk != curdisk {
+				log.Println("Stopping New Disk Found:", disk)
+				break outer
 			}
 			if !strings.Contains(hdr.Name, ".checksum") {
 				//log.Println(strings.Split(hdr.Name, "/")[1])
